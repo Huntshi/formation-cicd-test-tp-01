@@ -18,7 +18,7 @@ public class PricingIntegrationTest {
 
         // Act
         double actual = service.finalTotal(amountExcl, vip);
-        double afterVat = amountExcl * (1.0 + config.getVatRate()) / 100.0;
+        double afterVat = amountExcl * (1.0 + config.getVatRate() / 100.0);
         double afterVip = vip ? afterVat * 0.90 : afterVat;
         double shipping = afterVip < config.getFreeShippingThreshold() ? 4.99 : 0.0;
         double expected = afterVip + shipping;
