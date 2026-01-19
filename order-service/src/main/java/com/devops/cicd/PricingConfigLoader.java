@@ -7,24 +7,32 @@ import java.util.Properties;
 public class PricingConfigLoader {
 
     public PricingConfig load() {
-        double vatRate = 0;
-        double shipping = 0;
+        Properties prop = new Properties();
 
         try(InputStream input = PricingConfigLoader.class.getClassLoader().getResourceAsStream("app.properties")){
-            Properties prop = new Properties();
+
+            if (input == null){
+                throw new IllegalStateException("Fichier app.properties introuvale dans le classpath");
+            }
+
             prop.load(input);
-            vatRate = Double.parseDouble(prop.getProperty("vatRate"));
-            shipping = Double.parseDouble(prop.getProperty("shipping"));
+
         } catch (IOException ex){
             ex.printStackTrace();
         }
 
+        double vatRate = Double.parseDouble(required(prop, "vatRate"));
+        double shipping = Double.parseDouble(required(prop, "freeShippingThreshold"));
         PricingConfig file = new PricingConfig(vatRate, shipping);
 
         return file;
     }
 
     private String required(Properties props, String key) {
-         return "yes";
+        String value = props.getProperty(key);
+        if (value == null) {
+            throw new IllegalStateException("Propriété requise manquante : " + key);
+        }
+        return value;
     }
 }
