@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
             java-version: '17'
-            distribution: 'correto'
+            distribution: 'corretto'
             architecture: x64
             cache: 'maven'
 
@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'correto'
+          distribution: 'corretto'
           architecture: x64
           cache: 'maven'
 
