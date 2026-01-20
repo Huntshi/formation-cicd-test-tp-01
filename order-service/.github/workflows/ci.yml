@@ -1,0 +1,46 @@
+name: ci.yml
+
+on:
+  push:
+    branches:
+      - timeo
+
+jobs:
+  units-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du repository
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+            java-version: '17'
+            distribution: 'correto'
+            architecture: x64
+            cache: 'maven'
+
+      - name: Run Units tests for calcul
+        run: mvn clean test -Dtest=com.devops.cicd.PricingServiceTest
+
+      - name: Run Units tests for password
+        run: mvn clean test -Dtest=com.devops.cicd.PasswordPolicyTest
+
+  integration-test:
+    needs: units-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du repository
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'correto'
+          architecture: x64
+          cache: 'maven'
+
+      - name: Run Integration tests
+        run: mvn clean test -Dtest=com.devops.cicd.PricingIntegrationTest
+
