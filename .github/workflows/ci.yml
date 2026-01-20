@@ -20,9 +20,6 @@ jobs:
             architecture: x64
             cache: 'maven'
 
-      - name: Maven temporary
-        run: $env:Path = "D:\apache-maven-3.9.12\bin;$env:Path"
-
       - name: Run Units tests for calcul
         run: mvn clean test -f order-service/pom.xml -Dtest=com.devops.cicd.PricingServiceTest
 
